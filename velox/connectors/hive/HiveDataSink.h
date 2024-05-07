@@ -245,7 +245,7 @@ class HiveInsertTableHandle : public ConnectorInsertTableHandle {
 
   const HiveBucketProperty* bucketProperty() const;
 
-  bool isInsertTable() const;
+  bool isExistingTable() const;
 
   folly::dynamic serialize() const override;
 
@@ -378,13 +378,22 @@ struct HiveWriterId {
 
   HiveWriterId() = default;
 
+  /// HiveWriterId for partitioned (but non-bucketed tables).
   explicit HiveWriterId(uint32_t _partitionId)
       : HiveWriterId(_partitionId, std::nullopt) {}
 
+  /// HiveWriterId for partitioned and bucketed tables.
   HiveWriterId(uint32_t _partitionId, std::optional<uint32_t> _bucketId)
       : partitionId(_partitionId), bucketId(_bucketId) {}
 
-  /// Returns the special writer id for the un-partitioned table.
+  /// HiveWriterId for un-partitioned but bucketed tables.
+  HiveWriterId(
+      std::optional<uint32_t> _partitionId,
+      std::optional<uint32_t> _bucketId)
+      : partitionId(_partitionId), bucketId(_bucketId) {}
+
+  /// Returns the special writer id for the un-partitioned (and non-bucketed)
+  /// table.
   static const HiveWriterId& unpartitionedId();
 
   std::string toString() const;
