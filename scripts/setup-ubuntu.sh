@@ -46,11 +46,11 @@ SUDO="${SUDO:-"sudo --preserve-env"}"
 
 # Install packages required for build.
 function install_build_prerequisites {
-  ${SUDO} apt update
+  apt update
   # The is an issue on 22.04 where a version conflict prevents glog install,
   # installing libunwind first fixes this.
-  ${SUDO} apt install -y libunwind-dev
-  ${SUDO} apt install -y \
+  apt install -y libunwind-dev
+  apt install -y \
     build-essential \
     python3-pip \
     ccache \
@@ -61,13 +61,13 @@ function install_build_prerequisites {
     wget
 
     # Install to /usr/local to make it available to all users.
-    ${SUDO} pip3 install cmake==3.28.3
+    pip3 install cmake==3.28.3
 }
 
 # Install packages required for build.
 function install_velox_deps_from_apt {
-  ${SUDO} apt update
-  ${SUDO} apt install -y \
+  apt update
+  apt install -y \
     libc-ares-dev \
     libcurl4-openssl-dev \
     libssl-dev \
@@ -101,7 +101,7 @@ function install_fmt {
 function install_boost {
   github_checkout boostorg/boost "${BOOST_VERSION}" --recursive
   ./bootstrap.sh --prefix=/usr/local
-  ${SUDO} ./b2 "-j$(nproc)" -d0 install threading=multi --without-python
+  ./b2 "-j$(nproc)" -d0 install threading=multi --without-python
 }
 
 function install_folly {
@@ -161,11 +161,11 @@ function install_cuda {
   # See https://developer.nvidia.com/cuda-downloads
   if ! dpkg -l cuda-keyring 1>/dev/null; then
     wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-    $SUDO dpkg -i cuda-keyring_1.1-1_all.deb
+    dpkg -i cuda-keyring_1.1-1_all.deb
     rm cuda-keyring_1.1-1_all.deb
-    $SUDO apt update
+    apt update
   fi
-  $SUDO apt install -y cuda-nvcc-$(echo $1 | tr '.' '-') cuda-cudart-dev-$(echo $1 | tr '.' '-')
+  apt install -y cuda-nvcc-$(echo $1 | tr '.' '-') cuda-cudart-dev-$(echo $1 | tr '.' '-')
 }
 
 function install_velox_deps {
