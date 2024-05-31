@@ -230,5 +230,4 @@ jobs:
               bash -exc 'apt-get update && apt-get -y install python3 python3-pip python3-venv curl && \
               ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime && export DEBIAN_FRONTEND=noninteractive && apt-get install -y tzdata && dpkg-reconfigure --frontend noninteractive tzdata && \
               apt-get -y install software-properties-common && add-apt-repository ppa:deadsnakes/ppa && apt-get -y update && pip3 install cmake && \
-              source scripts/setup-ubuntu.sh && install_apt_deps && \
-              deactivate'
+              source scripts/setup-ubuntu.sh && install_apt_deps'
