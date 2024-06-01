@@ -231,6 +231,6 @@ jobs:
               ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime && export DEBIAN_FRONTEND=noninteractive && apt-get install -y tzdata && dpkg-reconfigure --frontend noninteractive tzdata && \
               apt-get -y install software-properties-common && add-apt-repository ppa:deadsnakes/ppa && apt-get -y update && pip3 install cmake && \
               source scripts/setup-ubuntu.sh && install_apt_deps && \
-              apt install -y libatomic-dev && \
+              apt install -y libatomic1-dev && \
               g++ -std=c++11 your_code.cpp -o your_program -latomic && \
               make'
